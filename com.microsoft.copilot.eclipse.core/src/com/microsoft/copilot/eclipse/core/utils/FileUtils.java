@@ -127,7 +127,7 @@ public class FileUtils {
     }
     String fileUri = "platform:/resource" + resource.getFullPath().toPortableString();
     try {
-      return new URI(fileUri);
+      return new URI("platform", null, "/resource" + resource.getFullPath().toPortableString(), null);
     } catch (URISyntaxException e) {
       CopilotCore.LOGGER.error("Invalid file URI: " + fileUri, e);
     }
