@@ -23,6 +23,16 @@ import org.mockito.MockedStatic;
 class FileUtilsTests {
 
   @Test
+  void testGetResourceUri_withNonAsciiLocationUri_returnsAsciiString() {
+    IResource resource = mock(IResource.class);
+    URI expected = URI.create("semanticfs:///project/caf\u00e9.txt");
+    when(resource.getLocation()).thenReturn(null);
+    when(resource.getLocationURI()).thenReturn(expected);
+
+    assertEquals(expected.toASCIIString(), FileUtils.getResourceUri(resource));
+  }
+
+  @Test
   void testGetLocalFilePath_absolutePath_returnsNormalizedPath(@TempDir Path tempDir) {
     Path expected = tempDir.resolve("external-file.txt").toAbsolutePath().normalize();
 
